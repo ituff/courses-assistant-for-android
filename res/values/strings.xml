@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">课程助理</string>
+    <string name="please_use_id">请使用学号</string>
+    <string name="password">密码</string>
+    <string name="learning_effect">学习效果</string>
+    <string name="teaching_arrangement">教学安排</string>
+    <string name="attendance">到课情况</string>
+    <string name="teaching_schedule">教学进度</string>
+
+    <string-array name="learning_effect_array">
+		<item></item>
+        <item>很差</item>
+        <item>较差</item>
+        <item>差</item>
+        <item>良</item>
+        <item>很好</item>
+    </string-array>
+    <string-array name="teaching_arrangement_array">
+        <item>调课</item>
+        <item>正常</item>
+        <item>停课</item>
+    </string-array>
+    <string-array name="teaching_schedule_array">
+        <item>&lt;50%</item>
+        <item>≈70%</item>
+        <item>&gt;90%</item>
+    </string-array>
+
+    <string name="teaching_evaluation">随堂评教</string>
+    <string name="tips">今天课上所学内容的重要观点和主要思想是什么？\n你对今天课上所讲内容还有什么疑问？那些内容最模糊不清？\n其他建议？
+	</string>
+    <string name="teaching_evaluation_tip">你所填写的所有信息将会被匿名存储，请如实填选。</string>
+    <string name="timetable">课表</string>
+    <string name="achievement">成绩</string>
+    <string name="config">设置</string>
+    <string name="message">消息</string>
+    <string name="teaching_arrangement_value1">调课</string>
+    <string name="teaching_arrangement_value2">正常</string>
+    <string name="teaching_arrangement_value3">停课</string>
+    <string name="attendance_value1">&lt;50%</string>
+    <string name="attendance_value2">≈70%</string>
+    <string name="attendance_value3">&gt;90%</string>
+    <string name="teaching_schedule_value1">较慢</string>
+    <string name="teaching_schedule_value2">适中</string>
+    <string name="teaching_schedule_value3">较快</string>
+    <string name="abort">取消</string>
+    <string name="ok">完成</string>
+    <string name="yes">确定</string>
+    <!-- 测试用 -->
+    <string name="message1">我正在驾车</string>
+    <string name="message2">我在电影院</string>
+    <string name="message3">我在上课</string>
+    <string name="message4">我在开会</string>
+    <string name="message5">抱歉我很忙，请稍后来电</string>
+    <!-- 测试用 -->
+    <string name="login_tip">通过登陆，即表示我可以接受课程助理的服务条款</string>
+    <string name="today">今天</string>
+    <string name="search">查询..</string>
+    <string name="year">学年</string>
+    <string name="term">学期</string>
+    <string name="week">周</string>
+    <string name="month">月</string>
+    <string name="state">状态</string>
+    <string name="logining">正在登录</string>
+        <string name="loading">正在载入</string>
+
+</resources>

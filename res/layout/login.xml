@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/welcome_bg">
+
+
+	<LinearLayout android:layout_marginTop="112dip"
+		android:layout_height="fill_parent" android:layout_width="fill_parent"
+		android:id="@+id/linearLayout1" android:orientation="vertical"
+		android:layout_marginBottom="75dip" android:layout_marginLeft="15dip"
+		android:layout_marginRight="15dip">
+		<EditText android:id="@+id/editText1" android:background="@drawable/shape"
+			android:hint="@string/please_use_id" android:singleLine="true"
+			android:layout_width="185dip" android:layout_height="36dip"
+				android:textSize="13sp"
+			android:layout_marginTop="53dip" android:layout_gravity="center_horizontal"
+			android:textColor="@drawable/white" android:paddingLeft="10dip"></EditText>
+		<EditText android:id="@+id/editText2" android:background="@drawable/shape"
+			android:hint="@string/password" android:singleLine="true"
+			android:textSize="13sp"
+			android:layout_width="185dip" android:layout_height="36dip" android:password="true"
+			android:layout_marginTop="7dip" android:layout_gravity="center_horizontal"
+			android:textColor="@drawable/white" android:paddingLeft="10dip"></EditText>
+		<Button android:layout_gravity="center_horizontal"
+			android:layout_marginTop="117dip" android:background="@drawable/logo"
+			android:id="@+id/login_button" android:layout_width="46dip"
+			android:layout_height="46dip"></Button>
+		<TextView android:layout_gravity="center_horizontal"
+			android:text="@string/login_tip" android:textSize="10sp"
+		  android:layout_width="wrap_content" 
+			android:layout_height="wrap_content"></TextView>
+	</LinearLayout>
+</LinearLayout>
