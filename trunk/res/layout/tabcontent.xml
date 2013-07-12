@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:id="@+id/Re"
+	>
+
+	
+	<TextView android:layout_width="76dip" android:id="@+id/tab_TextView"
+		android:gravity="center" android:background="@drawable/tab_left"
+		android:textSize="@dimen/tabwidgetSize" android:layout_height="30dip"
+		android:typeface="sans" android:layout_centerHorizontal="true"
+		 android:textColor="@drawable/white"></TextView>
+	
+</RelativeLayout>

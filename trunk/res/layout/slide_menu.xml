@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:background="@drawable/nav_cover_background"
+	android:layout_height="fill_parent">
+
+
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/timetable_RelativeLayout"
+		android:paddingTop="4dip" android:paddingBottom="4dip">
+
+		<ImageView android:layout_gravity="center_vertical"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
+			android:src="@drawable/menu_calendar_icon"
+			android:layout_centerVertical="true" android:id="@+id/imageview1"
+			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
+		<TextView android:gravity="center" android:textSize="16sp"
+			android:textColor="@color/white" android:layout_centerVertical="true"
+			android:textStyle="bold"
+			android:text="@string/timetable" android:layout_toRightOf="@id/imageview1"
+			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
+			android:id="@+id/timetable_menu_TextView"
+			android:layout_height="wrap_content"></TextView>
+
+		<ImageView android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
+			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="18.3dip"></ImageView>
+	</RelativeLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:background="@drawable/evaluation_separator"
+		android:layout_height="0.5dip"></LinearLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/achievement_RelativeLayout"
+		android:paddingTop="4dip" android:paddingBottom="4dip">
+
+		<ImageView android:layout_gravity="center_vertical"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
+			android:src="@drawable/menu_score_icon"
+			android:layout_centerVertical="true" android:id="@+id/imageview1"
+			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
+		<TextView android:gravity="center" android:textSize="16sp"
+			android:textColor="@color/white" android:layout_centerVertical="true"
+			android:text="@string/achievement" android:layout_toRightOf="@id/imageview1"
+			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
+			android:id="@+id/achievement_menu_TextView" android:textStyle="bold"
+			android:layout_height="wrap_content"></TextView>
+
+		<ImageView android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
+			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="18.3dip"></ImageView>
+	</RelativeLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:background="@drawable/evaluation_separator"
+		android:layout_height="0.5dip"></LinearLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/config_RelativeLayout"
+		android:paddingTop="4dip" android:paddingBottom="4dip">
+
+		<ImageView android:layout_gravity="center_vertical"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
+			android:src="@drawable/menu_setting_icon"
+			android:layout_centerVertical="true" android:id="@+id/imageview1"
+			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
+		<TextView android:gravity="center" android:textSize="16sp" android:textStyle="bold"
+			android:textColor="@color/white" android:layout_centerVertical="true"
+			android:text="@string/config" android:layout_toRightOf="@id/imageview1"
+			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+		<ImageView android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
+			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="18.3dip"></ImageView>
+	</RelativeLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:background="@drawable/evaluation_separator"
+		android:layout_height="0.5dip"></LinearLayout>
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:id="@+id/message_RelativeLayout"
+		android:paddingTop="4dip" android:paddingBottom="4dip">
+
+		<ImageView android:layout_gravity="center_vertical"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
+			android:src="@drawable/menu_message_icon"
+			android:layout_centerVertical="true" android:id="@+id/imageview1"
+			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
+		<TextView android:gravity="center" android:textSize="16sp" android:textStyle="bold"
+			android:textColor="@color/white" android:layout_centerVertical="true"
+			android:text="@string/message" android:layout_toRightOf="@id/imageview1"
+			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
+			android:layout_height="wrap_content"></TextView>
+
+		<ImageView android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
+			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="18.3dip"></ImageView>
+	</RelativeLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:background="@drawable/evaluation_separator"
+		android:layout_height="0.5dip"></LinearLayout>
+</LinearLayout>
