@@ -8,7 +8,34 @@ public class CourseElement {
 	private String classroomName;
 	private String time;
 	private String ctid;
+	private String courseNature;
+	private String credit;
+	private String endtime;
 	
+	public String getEndtime() {
+		return endtime;
+	}
+
+	public void setEndtime(String endtime) {
+		this.endtime = endtime;
+	}
+
+	public String getCourseNature() {
+		return courseNature;
+	}
+
+	public String getCredit() {
+		return credit;
+	}
+
+	public void setCredit(String credit) {
+		this.credit = credit;
+	}
+
+	public void setCourseNature(String courseNature) {
+		this.courseNature = courseNature;
+	}
+
 	public CourseElement(String courseName, int state, String teacherName,
 			String classroomName,String time) {
 		this.courseName = courseName;
@@ -19,13 +46,16 @@ public class CourseElement {
 	}
 	
 	public CourseElement(String courseName, int state, String teacherName,
-			String classroomName,String time,String ctid) {
+			String classroomName,String time,String ctid,String coursenature,String credit,String endtime) {
 		this.courseName = courseName;
 		this.state = state;
 		this.teacherName = teacherName;
 		this.classroomName = classroomName;
 		this.time=time;
 		this.ctid=ctid;
+		this.courseNature=coursenature;
+		this.credit=credit;
+		this.endtime=endtime;
 	}
 
 	public String getCourseName() {

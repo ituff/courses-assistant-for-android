@@ -11,17 +11,16 @@
     <string name="teaching_schedule">教学进度</string>
 
     <string-array name="learning_effect_array">
-		<item></item>
         <item>很差</item>
         <item>较差</item>
-        <item>差</item>
-        <item>良</item>
+        <item>一般</item>
+        <item>较好</item>
         <item>很好</item>
     </string-array>
     <string-array name="teaching_arrangement_array">
-        <item>调课</item>
-        <item>正常</item>
-        <item>停课</item>
+        <item>好</item>
+        <item>一般</item>
+        <item>差</item>
     </string-array>
     <string-array name="teaching_schedule_array">
         <item>&lt;50%</item>
@@ -29,16 +28,16 @@
         <item>&gt;90%</item>
     </string-array>
 
-    <string name="teaching_evaluation">随堂评教</string>
-    <string name="tips">今天课上所学内容的重要观点和主要思想是什么？\n你对今天课上所讲内容还有什么疑问？那些内容最模糊不清？\n其他建议？
-	</string>
-    <string name="teaching_evaluation_tip">你所填写的所有信息将会被匿名存储，请如实填选。</string>
+    <string name="teaching_evaluation">评价</string>
+    <string name="tips">今天课上所学内容的重要观点和主要思想是什么？你对今天课上所讲内容还有什么疑问？那些内容最模糊不清？其他问题？</string>
+    <string name="teaching_evaluation_tip">所有反馈信息都匿名存储，请如实填写。</string>
     <string name="timetable">课表</string>
     <string name="achievement">成绩</string>
     <string name="config">设置</string>
+    <string name="logout">注销</string>
     <string name="message">消息</string>
-    <string name="teaching_arrangement_value1">调课</string>
-    <string name="teaching_arrangement_value2">正常</string>
+    <string name="teaching_arrangement_value1">正常</string>
+    <string name="teaching_arrangement_value2">调课</string>
     <string name="teaching_arrangement_value3">停课</string>
     <string name="attendance_value1">&lt;50%</string>
     <string name="attendance_value2">≈70%</string>
@@ -49,14 +48,7 @@
     <string name="abort">取消</string>
     <string name="ok">完成</string>
     <string name="yes">确定</string>
-    <!-- 测试用 -->
-    <string name="message1">我正在驾车</string>
-    <string name="message2">我在电影院</string>
-    <string name="message3">我在上课</string>
-    <string name="message4">我在开会</string>
-    <string name="message5">抱歉我很忙，请稍后来电</string>
-    <!-- 测试用 -->
-    <string name="login_tip">通过登陆，即表示我可以接受课程助理的服务条款</string>
+    <string name="login_tip">初始密码为您的生日，如yyyyMMdd\n通过登陆，即表示我可以接受课程助理的服务条款</string>
     <string name="today">今天</string>
     <string name="search">查询..</string>
     <string name="year">学年</string>
@@ -65,6 +57,27 @@
     <string name="month">月</string>
     <string name="state">状态</string>
     <string name="logining">正在登录</string>
-        <string name="loading">正在载入</string>
-
+    <string name="loading">正在载入</string>
+	<string name="name">姓名</string>
+	<string name="college">学院</string>
+	<string name="specialty">专业</string>
+	<string name="classname">班级</string>
+	<string name="self_info">个人资料</string>
+	<string name="push_notice">推送通知</string>
+	<string name="curriculum_remind">课程提醒</string>
+	<string name="change_pwd">修改密码</string>
+	<string name="feedback">反馈建议</string>
+	<string name="about">关于</string>
+	<string name="login_out">注销登陆</string>
+    <string name="uploading">正在提交</string>
+	<string name="fill_old_pwd">请输入原密码</string>
+	<string name="fill_new_pwd">请输入新密码</string>
+	<string name="fill_new_pwd_again">请重新输入新密码</string>
+	<string name="feedback1">反馈</string>
+	<string name="feedback_notice">为了提高你的用户体验，欢迎反馈如下方面的信息：\n1)使用过程中出现的问题。\n2)期待的新功能。\n3)欢迎吐槽任何细节问题。</string>
+	<string name="submit">提交</string>
+	<string name="advice_tip">有任何意见建议，欢迎吐槽~</string>
+	<string name="summary">总结</string>
+	<string name="message1">课程助理由南京工业大学矩阵实验室的老师及学生自主设计开发，本版本内部结构调整较大，如果出现各种各样神奇的错误或者你有任何建议和想法请及时让我们知道，本软件尚未进入正式版请务必及时更新到最新的版本以获得新功能和更好的体验。\n反馈请进入 设置-反馈意见。</string>
+	<string name="message2">课程助理可以让你随时随地点评和总结上过的每一节课，轻松反馈课堂状况以及帮助老师提高教学质量。\n轻点课程即可评价和总结。</string>
 </resources>

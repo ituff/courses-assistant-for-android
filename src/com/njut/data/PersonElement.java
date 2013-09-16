@@ -16,7 +16,14 @@ private String collegename;
 private String realname;
 private String begindate;
 private String sessioncode;
+private String fieldName;
 
+public String getFieldName() {
+	return fieldName;
+}
+public void setFieldName(String fieldName) {
+	this.fieldName = fieldName;
+}
 public String getBirthday() {
 	return birthday;
 }

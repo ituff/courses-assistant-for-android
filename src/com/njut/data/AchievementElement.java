@@ -5,14 +5,17 @@ public class AchievementElement {
 	private String courseName;
 	private int score;
 	private String type;
-	private float credit;
+	private double credit;
+	private String grade;
+	private double point;
 
 	public AchievementElement(String courseName, int score, String type,
-			float credit) {
+			double credit,double point) {
 		this.courseName = courseName;
 		this.score = score;
 		this.type = type;
 		this.credit = credit;
+		this.point=point;
 	}
 	
 	public AchievementElement () {
@@ -31,7 +34,7 @@ public class AchievementElement {
 		return type;
 	}
 
-	public float getCredit() {
+	public double getCredit() {
 		return credit;
 	}
 
@@ -47,8 +50,34 @@ public class AchievementElement {
 		this.type = type;
 	}
 
-	public void setCredit(float credit) {
+	public void setCredit(double credit) {
 		this.credit = credit;
 	}
 
+	public String getGrade() {
+		return grade;
+	}
+
+	public double getPoint() {
+		return point;
+	}
+
+	public void setPoint(double point) {
+		this.point = point;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+		if (grade.trim().equals("优秀")) {
+			score = 95;
+		} else if (grade.trim().equals("良好")) {
+			score = 85;
+		} else if (grade.trim().equals("中") || grade.trim().equals("中等")) {
+			score = 75;
+		} else if (grade.trim().equals("及格")) {
+			score = 65;
+		} else {
+			score = 50;
+		}
+	}
 }

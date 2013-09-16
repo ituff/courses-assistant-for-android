@@ -1,5 +1,6 @@
 package com.njut.activity;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -36,6 +38,7 @@ import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +64,7 @@ import com.njut.data.AchievementElement;
 import com.njut.data.CourseElement;
 import com.njut.data.Curriculum;
 import com.njut.utility.AppUtils;
+import com.njut.utility.CalendarHelper;
 import com.njut.utility.ClassCoverClass;
 import com.njut.utility.JsonParse;
 import com.njut.utility.SpecialCalendar;
@@ -68,6 +72,7 @@ import com.njut.view.AchievementAdapter;
 import com.njut.view.CourseAdapter;
 import com.njut.view.CourseEveryMonthView;
 import com.njut.view.CourseEveryWeekView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 日历按月显示以及课程的显示
@@ -78,13 +83,14 @@ import com.njut.view.CourseEveryWeekView;
 public class CourseEveryMonthActivity extends Activity implements
 		OnGestureListener {
 	private String TAG = "CourseEveryMonthActivity";
-	
+
 	private ViewFlipper flipper = null;
 	private GestureDetector gestureDetector = null;
 	private CourseEveryMonthView calV = null;
 	private GridView gridView = null;
 	private TextView topText = null;
 	private TextView dayText;
+	private TextView weekText;
 	private static int jumpMonth = 0; // 每次滑动，增加或减去一个月,默认为0（即显示当前月）
 	private Date selectedDate;
 	private Resources res = null;
@@ -94,9 +100,9 @@ public class CourseEveryMonthActivity extends Activity implements
 	private ProgressDialog progressDialog;
 	private List<CourseElement> list;
 	private ReturnToTodayReceiver receiver;
-	
+
 	protected final int CURRICULUM_GET_FINISHED = 2;
-	
+
 	protected final String RETURN_STRING = "returnString";
 
 	Handler myHandler = new Handler() {
@@ -118,18 +124,25 @@ public class CourseEveryMonthActivity extends Activity implements
 			super.handleMessage(msg);
 		}
 	};
-	
+
 	protected void finishCurriculumGetOperation(String mStringReturnStr)
 			throws JSONException {
-		/*new AlertDialog.Builder(this).setTitle("数据")
-				.setMessage(mStringReturnStr).setPositiveButton("是", null)
-				.setNegativeButton("否", null).show();*/
+		/*
+		 * new AlertDialog.Builder(this).setTitle("数据")
+		 * .setMessage(mStringReturnStr).setPositiveButton("是", null)
+		 * .setNegativeButton("否", null).show();
+		 */
 		kczlApplication.CurriculumsString = mStringReturnStr;
+		String PREFS_NAME = "org.nutlab.kczl";
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("CurriculumsString", mStringReturnStr);
+		editor.commit();
 		JSONArray jsonObjs = new JSONArray(mStringReturnStr);
 		List<Curriculum> curriculums = new ArrayList<Curriculum>();
 		for (int i = 0; i < jsonObjs.length(); i++) {
 			JsonParse jp = new JsonParse();
-			curriculums.add(jp.jsonToCurriculum((JSONObject) jsonObjs.opt(i)));
+			curriculums.add(jp.jsonToCurriculum(jsonObjs.opt(i).toString()));
 		}
 		kczlApplication.Curriculums = curriculums;
 	}
@@ -140,31 +153,66 @@ public class CourseEveryMonthActivity extends Activity implements
 			message.what = CURRICULUM_GET_FINISHED;
 			curriculumService cs = new curriculumService();
 			String msg = cs.get();
+			String PREFS_NAME = "org.nutlab.kczl";
+			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt("IsLogined", kczlApplication.IsLogined);
+			editor.commit();
 			Bundle bundle = new Bundle();
 			bundle.putString(RETURN_STRING, msg);
 			message.setData(bundle);
 			myHandler.sendMessage(message);
 		}
 	}
-	
+
 	public CourseEveryMonthActivity() {
 		Date date = new Date();
 		selectedDate = date;
 
 	}
-	
-	private void refreshAchievement(){
+
+	private void refreshAchievement() {
 		courseListView = (ListView) findViewById(R.id.course_ListView);
-		ClassCoverClass c2c=new ClassCoverClass();
-		list=c2c.curriculumsToCourseElements(kczlApplication.Curriculums);
+		ClassCoverClass c2c = new ClassCoverClass();
+		CalendarHelper cHelper = new CalendarHelper();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		int day = cHelper.getDay(sf.format(selectedDate),
+				kczlApplication.Person.getBegindate());
+		int week = cHelper.getWeek(sf.format(selectedDate),
+				kczlApplication.Person.getBegindate());
+		list = c2c.curriculumsToCourseElements(kczlApplication.Curriculums,
+				day, week);
 		CourseAdapter adapter = new CourseAdapter(this, list);
 		courseListView.setAdapter(adapter);
 		courseListView.setOnItemClickListener(OnCourseListItemlistener);
 	}
 
+	private void reloadData() {
+		CurriculumGetThread CGT = new CurriculumGetThread();
+		progressDialog = ProgressDialog.show(
+				CourseEveryMonthActivity.this.getParent(),
+				getString(R.string.state), getString(R.string.loading), true);
+		CGT.start();
+		// 刷新courseListView
+		refreshAchievement();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.course_month);
 		res = getResources();
@@ -172,7 +220,7 @@ public class CourseEveryMonthActivity extends Activity implements
 		flipper = (ViewFlipper) findViewById(R.id.flipper);
 		flipper.removeAllViews();
 		calV = new CourseEveryMonthView(this, getResources(), jumpMonth,
-			 selectedDate);
+				selectedDate);
 
 		addGridView();
 		gridView.setAdapter(calV);
@@ -180,9 +228,11 @@ public class CourseEveryMonthActivity extends Activity implements
 		flipper.addView(gridView, 0);
 
 		topText = (TextView) findViewById(R.id.date_textView);
-		dayText= (TextView) findViewById(R.id.day_textView);
+		dayText = (TextView) findViewById(R.id.day_textView);
 		setDayText(selectedDate);
+		setWeekText(selectedDate);
 		addTextToTopTextView(topText);
+		refreshAchievement();
 		backButton = (Button) findViewById(R.id.toolbar_nav_button2);
 		updateButton = (Button) findViewById(R.id.toolbar_update_button);
 		backButton.setOnClickListener(new View.OnClickListener() {
@@ -193,28 +243,29 @@ public class CourseEveryMonthActivity extends Activity implements
 			}
 		});
 		updateButton.setOnClickListener(new View.OnClickListener() {// 更新按钮点击事件
-
-					
-			@Override
+					@Override
 					public void onClick(View v) {
-				CurriculumGetThread CGT = new CurriculumGetThread();
-				progressDialog = ProgressDialog.show(CourseEveryMonthActivity.this,
-						getString(R.string.state), getString(R.string.loading),
-						true);
-				CGT.start();
-				//刷新courseListView
-				refreshAchievement();
+						reloadData();
 					}
 				});
 		courseListView = (ListView) findViewById(R.id.course_ListView);
-		ClassCoverClass c2c=new ClassCoverClass();
-		list=c2c.curriculumsToCourseElements(kczlApplication.Curriculums);
-		/*list = new ArrayList<CourseElement>();
-		list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));//将数据显示到列表中
-		list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
-		list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
-		list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
-		list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));*/
+		ClassCoverClass c2c = new ClassCoverClass();
+		CalendarHelper cHelper = new CalendarHelper();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		int day = cHelper.getDay(sf.format(selectedDate),
+				kczlApplication.Person.getBegindate());
+		int week = cHelper.getWeek(sf.format(selectedDate),
+				kczlApplication.Person.getBegindate());
+		list = c2c.curriculumsToCourseElements(kczlApplication.Curriculums,
+				day, week);
+		/*
+		 * list = new ArrayList<CourseElement>(); list.add(new
+		 * CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));//将数据显示到列表中
+		 * list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
+		 * list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
+		 * list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
+		 * list.add(new CourseElement("数据结构", 0, "刘斌", "厚学317", "15:40-17:20"));
+		 */
 		CourseAdapter adapter = new CourseAdapter(this, list);
 		courseListView.setAdapter(adapter);
 		courseListView.setOnItemClickListener(OnCourseListItemlistener);
@@ -231,7 +282,14 @@ public class CourseEveryMonthActivity extends Activity implements
 			CourseElement mCourseElement = list.get(arg2);
 			Intent intent = new Intent(CourseEveryMonthActivity.this,
 					TeachingEvaluationActivity.class);
-			startActivity(intent);
+			Bundle bundle = new Bundle();
+			bundle.putString("coursename", mCourseElement.getCourseName());
+			bundle.putString("courseNature", mCourseElement.getCourseNature());
+			bundle.putString("credit", mCourseElement.getCredit());
+			bundle.putString("ctid", mCourseElement.getCtid());
+			bundle.putString("endtime", mCourseElement.getEndtime());
+			intent.putExtras(bundle);
+			startActivityForResult(intent, 0);
 		}
 	};
 
@@ -247,10 +305,10 @@ public class CourseEveryMonthActivity extends Activity implements
 
 		gridView = new GridView(this);
 		gridView.setNumColumns(7);
-		gridView.setColumnWidth(46);
-		if (Width == 480 && Height == 800) {
-			gridView.setColumnWidth(69);
-		}
+		// gridView.setColumnWidth(46);
+		// if (Width == 480 && Height == 800) {
+		gridView.setColumnWidth(Width / 7 + 1);
+		// }
 		gridView.setGravity(Gravity.CENTER_VERTICAL);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT)); // 去除gridView边框
 		gridView.setOnTouchListener(new OnTouchListener() {
@@ -264,31 +322,32 @@ public class CourseEveryMonthActivity extends Activity implements
 		});
 
 		gridView.setOnItemClickListener(new OnItemClickListener() {// gridView中的每一个item的点击事件
-					public void onItemClick(AdapterView<?> arg0, View arg1,
-							int position, long arg3) {
-						int startPosition = calV.getStartPositon();
-						int endPosition = calV.getEndPosition();
-						if (startPosition <= position
-								&& position <= endPosition) {
-							String scheduleDay = calV.getDateByClickItem(
-									position).split("\\.")[0];
-							int scheduleYear = calV.getShowYear();
-							int scheduleMonth = calV.getShowMonth();
-							Calendar cal1 = Calendar.getInstance();
-							cal1.set(scheduleYear, scheduleMonth - 1, Integer
-									.parseInt(scheduleDay));
-							Date date = cal1.getTime();
-							setNewBg(selectedDate, date);
-							selectedDate = date;
-							setDayText(selectedDate);
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				int startPosition = calV.getStartPositon();
+				int endPosition = calV.getEndPosition();
+				if (startPosition <= position && position <= endPosition) {
+					String scheduleDay = calV.getDateByClickItem(position)
+							.split("\\.")[0];
+					int scheduleYear = calV.getShowYear();
+					int scheduleMonth = calV.getShowMonth();
+					Calendar cal1 = Calendar.getInstance();
+					cal1.set(scheduleYear, scheduleMonth - 1,
+							Integer.parseInt(scheduleDay));
+					Date date = cal1.getTime();
+					setNewBg(selectedDate, date);
+					selectedDate = date;
+					setDayText(selectedDate);
+					setWeekText(selectedDate);
+					refreshAchievement();
 
-						}
-					}
-				});
+				}
+			}
+		});
 		gridView.setLayoutParams(params);
 	}
 
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,//滑动事件
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,// 滑动事件
 			float velocityY) {
 		int gvFlag = 0; // 每次添加gridview到viewflipper中时给的标记
 		if (e1.getX() - e2.getX() > 50) {
@@ -297,7 +356,7 @@ public class CourseEveryMonthActivity extends Activity implements
 			jumpMonth++; // 下一个月
 
 			calV = new CourseEveryMonthView(this, getResources(), jumpMonth,
-					 selectedDate);
+					selectedDate);
 			gridView.setAdapter(calV);
 			// flipper.addView(gridView);
 			addTextToTopTextView(topText);
@@ -316,7 +375,7 @@ public class CourseEveryMonthActivity extends Activity implements
 			jumpMonth--; // 上一个月
 
 			calV = new CourseEveryMonthView(this, getResources(), jumpMonth,
-					 selectedDate);
+					selectedDate);
 			gridView.setAdapter(calV);
 			gvFlag++;
 			addTextToTopTextView(topText);
@@ -363,18 +422,20 @@ public class CourseEveryMonthActivity extends Activity implements
 	// 添加头部的年份 ,月等信息
 	private void addTextToTopTextView(TextView view) {
 		StringBuffer textDate = new StringBuffer();
-		textDate.append(calV.getShowYear()).append(" ").append("年").append(
-				calV.getShowMonth()).append(" ").append("月");
+		textDate.append(calV.getShowYear()).append(" ").append("年")
+				.append(calV.getShowMonth()).append(" ").append("月");
 		view.setText(textDate.toString());
 
 	}
 
-	private class ReturnToTodayReceiver extends BroadcastReceiver {//回到今天
+	private class ReturnToTodayReceiver extends BroadcastReceiver {// 回到今天
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Date date = new Date();
 			setDayText(date);
+			setWeekText(selectedDate);
+			refreshAchievement();
 			if (jumpMonth == 0) {
 				if (!AppUtils.areDatesSame(date, selectedDate)) {
 					setNewBg(selectedDate, date);
@@ -390,7 +451,7 @@ public class CourseEveryMonthActivity extends Activity implements
 
 			calV = new CourseEveryMonthView(CourseEveryMonthActivity.this,
 					CourseEveryMonthActivity.this.getResources(), jumpMonth,
-					 selectedDate);
+					selectedDate);
 			gridView.setAdapter(calV);
 			addTextToTopTextView(topText);
 			flipper.addView(gridView, ++gvFlag);
@@ -439,22 +500,39 @@ public class CourseEveryMonthActivity extends Activity implements
 		CurrentText.setTextColor(Color.BLACK);
 	}
 
-	
-	private void setDayText(Date date){
-		if(AppUtils.areDatesSame(new Date(), date)){
+	private void setDayText(Date date) {
+		if (AppUtils.areDatesSame(new Date(), date)) {
 			dayText.setText(R.string.today);
 			return;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/d");
 		dayText.setText(sdf.format(date));
 	}
-	
+
+	private void setWeekText(Date date) {
+		weekText = (TextView) findViewById(R.id.week_textView);
+		CalendarHelper cHelper = new CalendarHelper();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			if (sf.parse(kczlApplication.Person.getBegindate()).getTime() > selectedDate
+					.getTime()) {
+				weekText.setText("");
+			} else {
+				int week = cHelper.getWeek(sf.format(selectedDate),
+						kczlApplication.Person.getBegindate());
+				weekText.setText("第" + week + "周");
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		unregisterReceiver(receiver);
 	}
-	
-	
+
 }

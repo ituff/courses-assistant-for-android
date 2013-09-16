@@ -1,6 +1,7 @@
 package com.njut.activity;
 
 import com.njut.R;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Dialog;
 import android.app.TabActivity;
@@ -27,6 +28,16 @@ public class WeekAndMonthTabActivity extends TabActivity {
 	  private Button todayButton;
 
 	/** Called when the activity is first created. */
+		@Override
+		public void onResume() {
+		    super.onResume();
+		    MobclickAgent.onResume(this);
+		}
+		@Override
+		public void onPause() {
+		    super.onPause();
+		    MobclickAgent.onPause(this);
+		}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

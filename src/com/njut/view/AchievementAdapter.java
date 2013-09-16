@@ -1,5 +1,6 @@
 package com.njut.view;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,17 +74,17 @@ public class AchievementAdapter extends BaseAdapter {
 		credit.setText(list.get(position).getCredit() + "学分");
 
 		type.setText(list.get(position).getType());
-
-		score.setText(Integer.toString(list.get(position).getScore()));
+		if (list.get(position).getGrade()!=null) {
+			score.setText(list.get(position).getGrade());
+		} else
+			score.setText(Integer.toString(list.get(position).getScore()));
 		String colorStr = AppUtils.getRGBByScore(list.get(position).getScore());
-		String colorStr1 = AppUtils.getRGBByScore1(list.get(position).getScore());
-		 GradientDrawable grad = new GradientDrawable(//渐变色  
-				            Orientation.TOP_BOTTOM,  
-				           new int[]{Color.parseColor(colorStr), Color.parseColor(colorStr1)}  
-				       );  
-
+		String colorStr1 = AppUtils.getRGBByScore1(list.get(position)
+				.getScore());
+		GradientDrawable grad = new GradientDrawable(// 渐变色
+				Orientation.TOP_BOTTOM, new int[] { Color.parseColor(colorStr),
+						Color.parseColor(colorStr1) });
 		linear.setBackgroundDrawable(grad);
-
 		return convertView;
 
 	}

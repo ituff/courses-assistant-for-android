@@ -11,6 +11,7 @@ import com.njut.widget.WheelView;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,19 +41,16 @@ public class PopMenu {
 				null);
 		this.view = view;
 		WheelView year = (WheelView) (view.findViewById(R.id.year));
-		final String years[] = new String[] { "2011-2012", "2012-2013",// 学年数据绑定
+		final String years[] = new String[] { "所有学年","2009-2010","2010-2011","2011-2012", "2012-2013",// 学年数据绑定
 				"2013-2014", "2014-2015" };
 
 		year.setAdapter(new ArrayWheelAdapter<String>(years));
 
-		final String terms[] = new String[] { "第一学期", "第二学期" };
+		final String terms[] = new String[] { "所有学期","第一学期", "第二学期" };
 		final WheelView term = (WheelView) (view.findViewById(R.id.term));// 学期数据绑定
 		WheelAdapter a = new ArrayWheelAdapter<String>(terms, 8);
 		term.setAdapter(a);
-
-		popupWindow = new PopupWindow(view, 100, LayoutParams.WRAP_CONTENT);
-		popupWindow = new PopupWindow(view, context.getResources()
-				.getDimensionPixelSize(R.dimen.popmenu_width),
+		popupWindow = new PopupWindow(view, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
 
 		// 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
@@ -79,11 +77,11 @@ public class PopMenu {
 
 	// 下拉式 弹出 pop菜单 parent 右下角
 	public void showAsDropDown(View parent) {
-		popupWindow.showAsDropDown(parent, 10,
-		// 保证尺寸是根据屏幕像素密度来的
-				context.getResources().getDimensionPixelSize(
-						R.dimen.popmenu_yoff));
-
+		float scale = context.getResources().getDisplayMetrics().density;
+		int width = (int) (318 * scale + 0.5f); 
+		int xoffInPixels = width / 2 - parent.getWidth() / 2;
+		int yoffInPixels = (int) (4 * scale + 0.5f);
+		popupWindow.showAsDropDown(parent, -xoffInPixels, -yoffInPixels);
 		// 使其聚集
 		popupWindow.setFocusable(true);
 		// 设置允许在外点击消失

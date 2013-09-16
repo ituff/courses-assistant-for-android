@@ -15,7 +15,7 @@ public class Curriculum {
 	private String oddorReven;
 	private int beginWeek;
 	private int day;
-    private double credit;
+    private String credit;
     private String place;
     private String chooseNumber;
 	private String ctid;
@@ -99,10 +99,10 @@ public class Curriculum {
 	public void setDay(int day) {
 		this.day = day;
 	}
-	public double getCredit() {
+	public String getCredit() {
 		return credit;
 	}
-	public void setCredit(double credit) {
+	public void setCredit(String credit) {
 		this.credit = credit;
 	}
 	public String getPlace() {

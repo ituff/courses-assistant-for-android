@@ -1,103 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:background="@drawable/nav_cover_background"
-	android:layout_height="fill_parent">
+	android:background="#D2D2D2" android:layout_height="fill_parent">
+	<LinearLayout android:layout_width="wrap_content"
+		android:paddingTop="21dip" android:paddingBottom="21dip"
+		android:layout_height="wrap_content">
+		<ImageView android:layout_width="101dip"
+			android:layout_marginLeft="11dip" android:id="@+id/face_ImageView"
+			android:layout_marginRight="11dip" android:layout_height="101dip"></ImageView>
+		<LinearLayout android:layout_width="wrap_content"
+			android:layout_gravity="center_vertical" android:orientation="vertical"
+			android:layout_height="wrap_content">
+			<TextView android:gravity="center" android:textSize="17sp"
+				android:textColor="@color/black" android:textStyle="bold"
+				android:text="小明" android:layout_width="wrap_content" android:id="@+id/name_TextView"
+				android:layout_height="wrap_content"></TextView>
+			<TextView android:gravity="center" android:textSize="15sp"
+				android:textColor="@color/gray" android:layout_marginTop="6dip"
+				android:textStyle="bold" android:text="计1301" android:layout_width="wrap_content"
+				android:id="@+id/class_TextView" android:layout_height="wrap_content"></TextView>
+			<TextView android:gravity="center" android:textSize="15sp"
+				android:textColor="@color/gray" android:layout_marginTop="6dip"
+				android:textStyle="bold" android:text="计算机科学与技术"
+				android:layout_width="wrap_content" android:id="@+id/specialty_TextView"
+				android:layout_height="wrap_content"></TextView>
+		</LinearLayout>
 
+	</LinearLayout>
 
 	<RelativeLayout android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/timetable_RelativeLayout"
-		android:paddingTop="4dip" android:paddingBottom="4dip">
+		android:background="#F6F6F6" android:paddingTop="5dip"
+		android:paddingBottom="5dip">
 
 		<ImageView android:layout_gravity="center_vertical"
 			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
 			android:src="@drawable/menu_calendar_icon"
 			android:layout_centerVertical="true" android:id="@+id/imageview1"
 			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
-		<TextView android:gravity="center" android:textSize="16sp"
-			android:textColor="@color/white" android:layout_centerVertical="true"
-			android:textStyle="bold"
-			android:text="@string/timetable" android:layout_toRightOf="@id/imageview1"
-			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
-			android:id="@+id/timetable_menu_TextView"
+		<TextView android:gravity="center" android:textSize="18sp"
+			android:textColor="@color/black" android:layout_centerVertical="true"
+			android:textStyle="bold" android:text="@string/timetable"
+			android:layout_toRightOf="@id/imageview1" android:layout_marginLeft="6dip"
+			android:layout_width="wrap_content" android:id="@+id/timetable_menu_TextView"
 			android:layout_height="wrap_content"></TextView>
 
 		<ImageView android:layout_centerVertical="true"
-			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
-			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
-			android:layout_height="18.3dip"></ImageView>
+			android:layout_alignParentRight="true" android:layout_marginRight="9dip"
+			android:layout_width="32dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="22dip"></ImageView>
 	</RelativeLayout>
 	<LinearLayout android:layout_width="fill_parent"
-		android:background="@drawable/evaluation_separator"
 		android:layout_height="0.5dip"></LinearLayout>
 	<RelativeLayout android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/achievement_RelativeLayout"
-		android:paddingTop="4dip" android:paddingBottom="4dip">
+		android:background="#F6F6F6" android:paddingTop="5dip"
+		android:paddingBottom="5dip">
 
 		<ImageView android:layout_gravity="center_vertical"
 			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
 			android:src="@drawable/menu_score_icon"
 			android:layout_centerVertical="true" android:id="@+id/imageview1"
 			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
-		<TextView android:gravity="center" android:textSize="16sp"
-			android:textColor="@color/white" android:layout_centerVertical="true"
+		<TextView android:gravity="center" android:textSize="18sp"
+			android:textColor="@color/black" android:layout_centerVertical="true"
 			android:text="@string/achievement" android:layout_toRightOf="@id/imageview1"
 			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
 			android:id="@+id/achievement_menu_TextView" android:textStyle="bold"
 			android:layout_height="wrap_content"></TextView>
 
 		<ImageView android:layout_centerVertical="true"
-			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
-			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
-			android:layout_height="18.3dip"></ImageView>
+			android:layout_alignParentRight="true" android:layout_marginRight="9dip"
+			android:layout_width="32dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="22dip"></ImageView>
 	</RelativeLayout>
 	<LinearLayout android:layout_width="fill_parent"
-		android:background="@drawable/evaluation_separator"
 		android:layout_height="0.5dip"></LinearLayout>
 	<RelativeLayout android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/config_RelativeLayout"
-		android:paddingTop="4dip" android:paddingBottom="4dip">
+		android:background="#F6F6F6" android:paddingTop="5dip"
+		android:paddingBottom="5dip">
 
 		<ImageView android:layout_gravity="center_vertical"
 			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
 			android:src="@drawable/menu_setting_icon"
 			android:layout_centerVertical="true" android:id="@+id/imageview1"
 			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
-		<TextView android:gravity="center" android:textSize="16sp" android:textStyle="bold"
-			android:textColor="@color/white" android:layout_centerVertical="true"
-			android:text="@string/config" android:layout_toRightOf="@id/imageview1"
+		<TextView android:gravity="center" android:textSize="18sp"
+			android:textStyle="bold" android:textColor="@color/black"
+			android:layout_centerVertical="true" android:text="@string/config"
+			android:layout_toRightOf="@id/imageview1" android:id="@+id/config_TextView"
 			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
 			android:layout_height="wrap_content"></TextView>
 
 		<ImageView android:layout_centerVertical="true"
-			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
-			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
-			android:layout_height="18.3dip"></ImageView>
+			android:layout_alignParentRight="true" android:layout_marginRight="9dip"
+			android:layout_width="32dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="22dip"></ImageView>
 	</RelativeLayout>
 	<LinearLayout android:layout_width="fill_parent"
-		android:background="@drawable/evaluation_separator"
 		android:layout_height="0.5dip"></LinearLayout>
 	<RelativeLayout android:layout_height="wrap_content"
 		android:layout_width="fill_parent" android:id="@+id/message_RelativeLayout"
-		android:paddingTop="4dip" android:paddingBottom="4dip">
+		android:background="#F6F6F6" android:paddingTop="5dip"
+		android:paddingBottom="5dip">
 
 		<ImageView android:layout_gravity="center_vertical"
 			android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
 			android:src="@drawable/menu_message_icon"
 			android:layout_centerVertical="true" android:id="@+id/imageview1"
 			android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
-		<TextView android:gravity="center" android:textSize="16sp" android:textStyle="bold"
-			android:textColor="@color/white" android:layout_centerVertical="true"
-			android:text="@string/message" android:layout_toRightOf="@id/imageview1"
-			android:layout_marginLeft="6dip" android:layout_width="wrap_content"
-			android:layout_height="wrap_content"></TextView>
+		<TextView android:gravity="center" android:textSize="18sp"
+			android:textStyle="bold" android:textColor="@color/black"
+			android:layout_centerVertical="true" android:text="@string/message"
+			android:layout_toRightOf="@id/imageview1" android:layout_marginLeft="6dip"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 
 		<ImageView android:layout_centerVertical="true"
-			android:layout_alignParentRight="true" android:layout_marginRight="11dip"
-			android:layout_width="12dip" android:src="@drawable/toolbar_chevron_right"
-			android:layout_height="18.3dip"></ImageView>
+			android:layout_alignParentRight="true" android:layout_marginRight="9dip"
+			android:layout_width="32dip" android:src="@drawable/toolbar_chevron_right"
+			android:layout_height="22dip"></ImageView>
 	</RelativeLayout>
 	<LinearLayout android:layout_width="fill_parent"
-		android:background="@drawable/evaluation_separator"
+
 		android:layout_height="0.5dip"></LinearLayout>
+	<RelativeLayout android:layout_height="fill_parent"
+		android:layout_width="fill_parent">
+		<RelativeLayout android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" android:layout_marginBottom="20dip"
+			android:layout_width="fill_parent" android:background="#F6F6F6"
+			android:paddingTop="5dip" android:paddingBottom="5dip">
+
+			<ImageView android:layout_gravity="center_vertical"
+				android:layout_alignParentLeft="true" android:layout_marginLeft="8dip"
+				android:src="@drawable/menu_system_icon"
+				android:layout_centerVertical="true" android:id="@+id/imageview1"
+				android:layout_height="29.6dip" android:layout_width="31dip"></ImageView>
+			<TextView android:gravity="center" android:textSize="15sp"
+				android:textStyle="bold" android:textColor="@color/gray"
+				android:layout_centerVertical="true" android:text="Copyright©NJUT M-Lab"
+				android:layout_toRightOf="@id/imageview1" android:layout_marginLeft="6dip"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+
+			<TextView android:gravity="center"
+				android:layout_centerVertical="true" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true" android:layout_marginRight="20dip"
+				android:text="v0.3" android:textColor="@color/gray"
+				android:textSize="13sp"></TextView>
+		</RelativeLayout>
+	</RelativeLayout>
 </LinearLayout>
