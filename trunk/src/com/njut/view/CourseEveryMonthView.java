@@ -49,7 +49,6 @@ public class CourseEveryMonthView extends BaseAdapter {
 	private String currentMonth = "";
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
-	private int currentFlag = -1; // 用于标记当天
 
 	private int showYear; // 用于在头部显示的年份
 	private int showMonth; // 用于在头部显示的月份
@@ -63,6 +62,7 @@ public class CourseEveryMonthView extends BaseAdapter {
 	private String sys_day = "";
 
 	private Date selectedDate;
+	private int mCount;
 
 	public CourseEveryMonthView() {
 		Date date = new Date();
@@ -101,8 +101,7 @@ public class CourseEveryMonthView extends BaseAdapter {
 			}
 		}
 
-		currentYear = String.valueOf(stepYear);
-		; // 得到当前的年份
+		currentYear = String.valueOf(stepYear);// 得到当前的年份
 		currentMonth = String.valueOf(stepMonth); // 得到本月
 													// （jumpMonth为滑动的次数，每滑动一次就增加一月或减一月）
 
@@ -127,17 +126,26 @@ public class CourseEveryMonthView extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(
 					R.layout.calendar_item, null);
 		}
+		if (position == 0)
+		{
+			mCount++;
+		}
+		else
+		{
+			mCount = 0;
+		}
+		
+		if (mCount > 1)
+		{
+			return convertView;
+		}
+		Log.v(this.getClass().getName().toString(), Integer.toString(position));
 		TextView textView = (TextView) convertView.findViewById(R.id.tvtext);
-		String d = dayNumber[position].split("\\.")[0];
-		String dv = dayNumber[position].split("\\.")[1];
-		// Typeface typeface = Typeface.createFromAsset(context.getAssets(),
-		// "fonts/Helvetica.ttf");
-		// textView.setTypeface(typeface);
+		String d = dayNumber[position];
 		SpannableString sp = new SpannableString(d);
 		sp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0,
 				d.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -171,61 +179,30 @@ public class CourseEveryMonthView extends BaseAdapter {
 		daysOfMonth = sc.getDaysOfMonth(isLeapyear, month); // 某月的总天数
 		dayOfWeek = sc.getWeekdayOfMonth(year, month); // 某月第一天为星期几
 		lastDaysOfMonth = sc.getDaysOfMonth(isLeapyear, month - 1); // 上一个月的总天数
-		Log.d("DAY", isLeapyear + " ======  " + daysOfMonth
-				+ "  ============  " + dayOfWeek + "  =========   "
-				+ lastDaysOfMonth);
 		getweek(year, month);
 	}
 
 	// 将一个月中的每一天的值添加入数组dayNuber中
 	private void getweek(int year, int month) {
 		int j = 1;
-		int flag = 0;
-		String lunarDay = "";
-
 		for (int i = 0; i < dayNumber.length; i++) {
 
 			if (i < dayOfWeek) { // 前一个月
 				int temp = lastDaysOfMonth - dayOfWeek + 1;
-				lunarDay = lc.getLunarDate(year, month - 1, temp + i, false);
-				dayNumber[i] = (temp + i) + "." + lunarDay;
+				dayNumber[i] = Integer.toString((temp + i));
 			} else if (i < daysOfMonth + dayOfWeek) { // 本月
 				String day = String.valueOf(i - dayOfWeek + 1); // 得到的日期
-				lunarDay = lc.getLunarDate(year, month, i - dayOfWeek + 1,
-						false);
-				dayNumber[i] = i - dayOfWeek + 1 + "." + lunarDay;
-				// 对于当前月才去标记当前日期
-				if (sys_year.equals(String.valueOf(year))
-						&& sys_month.equals(String.valueOf(month))
-						&& sys_day.equals(day)) {
-					// 笔记当前日期
-					currentFlag = i;
-				}
-
+				dayNumber[i] = day;
 				setShowYear(year);
 				setShowMonth(month);
 				setAnimalsYear(lc.animalsYear(year));
-				setLeapMonth(lc.leapMonth == 0 ? "" : String
-						.valueOf(lc.leapMonth));
-				setCyclical(lc.cyclical(year));
 			} else { // 下一个月
-				lunarDay = lc.getLunarDate(year, month + 1, j, false);
-				dayNumber[i] = j + "." + lunarDay;
+				dayNumber[i] =Integer.toString(j) ;
 				j++;
 			}
 		}
-
-		String abc = "";
-		for (int i = 0; i < dayNumber.length; i++) {
-			abc = abc + dayNumber[i] + ":";
-		}
-		Log.d("DAYNUMBER", abc);
-
 	}
 
-	public void matchScheduleDate(int year, int month, int day) {
-
-	}
 
 	/**
 	 * 点击每一个item时返回item中的日期

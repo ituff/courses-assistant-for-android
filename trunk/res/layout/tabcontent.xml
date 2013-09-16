@@ -8,7 +8,7 @@
 	<TextView android:layout_width="76dip" android:id="@+id/tab_TextView"
 		android:gravity="center" android:background="@drawable/tab_left"
 		android:textSize="@dimen/tabwidgetSize" android:layout_height="30dip"
-		android:typeface="sans" android:layout_centerHorizontal="true"
+		android:typeface="sans" android:layout_centerInParent="true"
 		 android:textColor="@drawable/white"></TextView>
 	
 </RelativeLayout>

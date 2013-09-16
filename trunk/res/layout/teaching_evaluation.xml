@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" android:background="@drawable/evaluation_bg">
+	android:layout_height="fill_parent" android:background="#F0F0F0">
 
 
 	<LinearLayout android:layout_height="41dip"
-		android:layout_width="wrap_content" android:id="@+id/linearLayout1"
+		android:layout_width="fill_parent" android:id="@+id/linearLayout1"
 		android:orientation="horizontal" android:background="@drawable/toolbar">
 		<Button android:layout_gravity="center_vertical"
 			android:layout_weight="0" android:layout_marginLeft="11dip"
@@ -13,12 +13,35 @@
 			android:id="@+id/abort_button" android:text="@string/abort"
 			android:textColor="@drawable/white" android:layout_height="28dip"
 			android:layout_width="42dip"></Button>
-		<TextView android:layout_gravity="center_vertical"
-			android:gravity="center" android:text="@string/teaching_evaluation"
-			android:id="@+id/textView1" android:layout_weight="1"
-			android:textSize="18sp" android:textColor="@drawable/white"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-
+		<LinearLayout android:layout_weight="1" android:gravity="center"
+			android:layout_width="wrap_content" android:layout_height="fill_parent">
+			<RelativeLayout android:layout_marginRight="10dip"
+				 android:layout_width="wrap_content"
+				android:layout_height="fill_parent">
+				<TextView android:layout_centerInParent="true"
+				
+					android:text="@string/teaching_evaluation" android:id="@+id/teaching_evaluation_TextView"
+					android:textSize="18sp" android:textColor="@drawable/white"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+				<LinearLayout android:layout_width="40dip"
+					android:id="@+id/teaching_evaluation_Line"
+					android:layout_alignParentBottom="true"
+					android:layout_marginBottom="2dip" android:layout_height="1.5dip"
+					android:background="@drawable/white"></LinearLayout>
+			</RelativeLayout>
+			<RelativeLayout android:layout_width="wrap_content"
+				 android:layout_height="fill_parent">
+				<TextView android:layout_centerInParent="true"
+					android:text="@string/summary" android:id="@+id/summary_TextView"
+					android:textSize="18sp" android:textColor="@color/gray"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+				<LinearLayout android:layout_width="40dip"
+					android:visibility="gone" android:id="@+id/summary_Line"
+					android:layout_alignParentBottom="true"
+					android:layout_marginBottom="2dip" android:layout_height="1.5dip"
+					android:background="@drawable/white"></LinearLayout>
+			</RelativeLayout>
+		</LinearLayout>
 		<Button android:layout_gravity="center_vertical"
 			android:textSize="12sp" android:layout_weight="0"
 			android:layout_marginRight="11dip" android:text="@string/ok"
@@ -27,17 +50,20 @@
 			android:layout_height="28dip"></Button>
 	</LinearLayout>
 	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:scrollbars="vertical">
+		android:id="@+id/teaching_evaluation_View" android:layout_height="wrap_content"
+		android:scrollbars="vertical">
 		<LinearLayout android:layout_height="fill_parent"
 			android:layout_width="fill_parent" android:orientation="vertical">
 			<LinearLayout android:layout_height="130dip"
 				android:layout_width="fill_parent" android:id="@+id/linearLayout2"
 				android:paddingLeft="20dip" android:orientation="vertical"
 				android:paddingTop="23dip" android:background="@drawable/evaluation_bg_list">
-				<TextView android:layout_height="wrap_content"
-					android:text="数据结构与算法" android:id="@+id/course_name_textView"
-					android:textSize="16sp" android:textColor="@drawable/white"
-					android:layout_width="wrap_content"></TextView>
+				<com.njut.view.AlwaysMarqueeTextView
+					android:layout_height="wrap_content" android:text="数据结构与算法"
+					android:id="@+id/course_name_textView" android:textSize="16sp"
+					android:textColor="@drawable/white" android:singleLine="true"
+					android:ellipsize="marquee" android:marqueeRepeatLimit="marquee_forever"
+					android:layout_width="wrap_content"></com.njut.view.AlwaysMarqueeTextView>
 				<TextView android:layout_height="wrap_content"
 					android:layout_marginTop="20dip" android:text="必修课" android:id="@+id/type_textView"
 					android:textSize="13sp" android:layout_width="wrap_content"></TextView>
@@ -58,8 +84,8 @@
 						android:layout_marginLeft="8dip" android:layout_width="wrap_content"></TextView>
 					<TextView android:layout_height="wrap_content"
 						android:textSize="15sp" android:textColor="@color/black"
-						android:layout_alignParentRight="true" 
-						android:id="@+id/learning_effect_textView" android:layout_width="wrap_content"></TextView>
+						android:layout_alignParentRight="true" android:id="@+id/learning_effect_textView"
+						android:layout_width="wrap_content"></TextView>
 				</RelativeLayout>
 				<ImageView android:background="@drawable/evaluation_separator"
 					android:layout_marginTop="4dip" android:layout_height="2dip"
@@ -138,13 +164,17 @@
 						android:text="@string/attendance_value3" android:gravity="center"
 						android:button="@null"></RadioButton>
 				</RadioGroup>
-				<TextView android:layout_height="wrap_content" android:textSize="15sp" android:textColor="@color/gray"
-					android:layout_marginLeft="8dip" android:layout_alignParentLeft="true" android:layout_marginTop="16dip"
-					android:text="@string/teaching_schedule" android:layout_width="wrap_content"></TextView>
-				<ImageView android:background="@drawable/evaluation_separator" android:layout_marginTop="4dip"
-					android:layout_height="2dip" android:layout_width="fill_parent"></ImageView>
-				<RadioGroup android:id="@+id/radioGroup" android:layout_marginTop="7dip"
-					android:orientation="horizontal" android:contentDescription="@string/teaching_schedule"
+				<TextView android:layout_height="wrap_content"
+					android:textSize="15sp" android:textColor="@color/gray"
+					android:layout_marginLeft="8dip" android:layout_alignParentLeft="true"
+					android:layout_marginTop="16dip" android:text="@string/teaching_schedule"
+					android:layout_width="wrap_content"></TextView>
+				<ImageView android:background="@drawable/evaluation_separator"
+					android:layout_marginTop="4dip" android:layout_height="2dip"
+					android:layout_width="fill_parent"></ImageView>
+				<RadioGroup android:id="@+id/radioGroup"
+					android:layout_marginTop="7dip" android:orientation="horizontal"
+					android:contentDescription="@string/teaching_schedule"
 					android:layout_width="fill_parent" android:gravity="center"
 					android:layout_height="wrap_content">
 
@@ -171,20 +201,32 @@
 				<LinearLayout android:focusable="true"
 					android:focusableInTouchMode="true" android:layout_width="0px"
 					android:layout_height="0px" />
-				<ImageView android:background="@drawable/evaluation_sep2" android:layout_marginTop="16dip"
-					android:layout_height="2dip" android:layout_width="fill_parent"></ImageView>
-				<EditText android:layout_height="wrap_content" 
-					android:hint="@string/tips" android:textColor="@color/black"
+				<ImageView android:background="@drawable/evaluation_sep2"
+					android:layout_marginTop="16dip" android:layout_height="2dip"
+					android:layout_width="fill_parent"></ImageView>
+				<EditText android:layout_height="wrap_content"
+					android:hint="@string/advice_tip" android:textColor="@color/black"
 					android:gravity="top" android:lines="7" android:layout_marginTop="14dip"
 					android:layout_marginBottom="15dip" android:id="@+id/evaluation_EditText"
 					android:background="@drawable/textfield_edit_pic" android:textSize="14sp"
-					android:textColorHint="@color/lightgray" 
-					android:layout_width="fill_parent"></EditText>
-				<TextView android:layout_height="wrap_content" android:layout_marginBottom="15dip"
-					android:textColor="@color/black" android:singleLine="true"
-					android:layout_gravity="center_horizontal" android:text="@string/teaching_evaluation_tip"
-					android:textSize="11sp" android:layout_width="wrap_content"></TextView>
+					android:textColorHint="@color/lightgray" android:layout_width="fill_parent"></EditText>
+				<TextView android:layout_height="wrap_content"
+					android:layout_marginBottom="15dip" android:textColor="@color/black"
+					android:singleLine="true" android:layout_gravity="center_horizontal"
+					android:text="@string/teaching_evaluation_tip" android:textSize="11sp"
+					android:layout_width="wrap_content"></TextView>
 			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
+	<LinearLayout android:layout_width="fill_parent"
+		android:id="@+id/summary_View" android:visibility="gone"
+		android:gravity="center_horizontal" android:orientation="vertical"
+		android:layout_height="fill_parent">
+		<EditText android:layout_height="200dip" android:hint="@string/tips"
+			android:textColor="@color/black" android:gravity="top"
+			android:layout_marginTop="15dip" android:id="@+id/summary_EditText"
+			android:background="@drawable/textfield_edit_pic" android:textSize="15sp"
+			android:textColorHint="@color/lightgray" android:layout_gravity="center_horizontal"
+			android:layout_width="280dip"></EditText>
+	</LinearLayout>
 </LinearLayout>

@@ -26,6 +26,15 @@ public class curriculumService {
 	private String TAG = "CURRICULUM_SERVICE";
 
 	public String get() {
+		if(kczlApplication.IsOffLine==1){
+			loginService ls = new loginService();
+			String msg = ls.login(kczlApplication.UserName,
+					kczlApplication.PassWord);
+			if(!msg.contains("birthday")){
+				kczlApplication.IsLogined=0;
+				return "Error";
+			}			
+		}
 		DefaultHttpClient httpclient = new DefaultHttpClient();
 		// ÄãµÄURL
 		HttpPost httppost = new HttpPost("http://" + kczlApplication.ServerUri

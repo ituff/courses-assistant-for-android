@@ -40,7 +40,8 @@ public class CourseEveryWeekView extends BaseAdapter {
 	private Resources res;
 	private Date[] datesOfWeek = new Date[7];
 	private Date selectedDate;
-
+	private int mCount;
+	
 	public CourseEveryWeekView(Context context, Resources rs, int jumpWeek,
 			Date firstDateOfWeek, Date selectedDate) {
 		this.selectedDate = selectedDate;
@@ -73,26 +74,36 @@ public class CourseEveryWeekView extends BaseAdapter {
 
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(
-					R.layout.calendar_item, null);
+					R.layout.calendar_item1, null);
 		}
+		if (position == 0) {
+			mCount++;
+		} else {
+			mCount = 0;
+		}
+
+		if (mCount > 1) {
+			return convertView;
+		}
+		Log.v(this.getClass().getName(), Integer.toString(position)+""+selectedDate);
 		TextView textView = (TextView) convertView.findViewById(R.id.tvtext);
 		SimpleDateFormat fymd = new SimpleDateFormat("d");
 		String d = fymd.format(datesOfWeek[position]);
 
 		SpannableString sp = new SpannableString(d);
-		sp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0,
-				d.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		sp.setSpan(new RelativeSizeSpan(1.2f), 0, d.length(),
+//		sp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0,
+//				d.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		sp.setSpan(new RelativeSizeSpan(1.6f), 0, d.length(),
 				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-		textView.setText(d);
+		textView.setText(sp);
 		textView.setTextColor(Color.GRAY);
-		Drawable db1 = res.getDrawable(R.drawable.light_separator_rotated);
-		db1.setBounds(0, 0, 2, 38);
-		textView.setCompoundDrawables(null, null, db1, null);
 		if (AppUtils.areDatesSame(datesOfWeek[position], selectedDate)) {
-			textView.setBackgroundResource(R.drawable.calendar_list_overlay);
+			// textView.setBackgroundResource(R.drawable.calendar_list_overlay);
 			textView.setTextColor(Color.BLACK);
+			if (context instanceof CourseEveryWeekActivity) {
+				((CourseEveryWeekActivity) context).darwOverlay(position);
+			}
 
 		}
 		return convertView;
@@ -118,5 +129,9 @@ public class CourseEveryWeekView extends BaseAdapter {
 				return true;
 		}
 		return false;
+	}
+	public String getTopString() {
+		SimpleDateFormat fymd = new SimpleDateFormat("yyyy ÄêM ÔÂ");
+		return fymd.format(datesOfWeek[0]);
 	}
 }

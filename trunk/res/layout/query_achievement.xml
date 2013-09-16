@@ -1,24 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:background="@drawable/evaluation_bg" android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F0F0F0"
+    android:orientation="vertical" >
 
+    <RelativeLayout
+        android:id="@+id/RLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="41dip"
+        android:background="@drawable/toolbar"
+        android:orientation="horizontal" >
 
-	<RelativeLayout 
-		android:layout_height="41dip" android:layout_width="fill_parent"
-		android:id="@+id/RLayout1" android:orientation="horizontal"
-		android:background="@drawable/toolbar">
+        <Button
+            android:id="@+id/toolbar_nav_button"
+            android:layout_width="42dip"
+            android:layout_height="28dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dip"
+            android:background="@drawable/toolbar_nav_icon" >
+        </Button>
 
-		<Button android:layout_alignParentLeft="true"
-			android:layout_marginLeft="8dip" android:layout_centerVertical="true"
-			android:background="@drawable/toolbar_nav_icon" android:id="@+id/toolbar_nav_button"
-			android:layout_height="28dip" android:layout_width="42dip"></Button>
-		<TextView android:layout_centerInParent="true" android:textSize="18sp" android:textColor="@drawable/white"
-			android:gravity="center" android:text="学年/学期" android:id="@+id/term_textView"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+        <TextView
+            android:id="@+id/term_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="学年/学期"
+            android:textColor="@drawable/white"
+            android:textSize="18sp" >
+        </TextView>
+    </RelativeLayout>
 
-	</RelativeLayout>
-	<ListView android:dividerHeight="0dip" android:divider="#00000000"
-		android:cacheColorHint="#00000000" android:layout_height="wrap_content"
-		android:layout_width="wrap_content" android:id="@+id/achievement_ListView"></ListView>
+    <RelativeLayout
+        android:id="@+id/tip_RelativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="65dip"
+            android:layout_height="65dip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dip"
+            android:background="@drawable/grade_pointer" >
+        </ImageView>
+
+        <ImageView
+            android:layout_width="320dip"
+            android:layout_height="90dip"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="25dip"
+            android:background="@drawable/no_grade" >
+        </ImageView>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/gpa"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:divider="@color/dark"
+        android:dividerHeight="0.05dip"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:background="#A8A8A8" 
+        />
+
+    <ListView
+        android:id="@+id/achievement_ListView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#000000"
+        android:divider="@color/dark"
+        android:dividerHeight="0.05dip" >
+    </ListView>
+
 </LinearLayout>

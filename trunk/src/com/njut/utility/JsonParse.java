@@ -1,5 +1,8 @@
 package com.njut.utility;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,21 +32,22 @@ public class JsonParse {
 			person.setRealname(jsonObj.getString("realname"));
 			person.setBegindate(jsonObj.getString("begindate"));
 			person.setSessioncode(jsonObj.getString("sessioncode"));
+			person.setFieldName(jsonObj.getString("fieldname"));
 		} catch (JSONException e) {
 			Log.e("jsonToPersonElement", e.toString());
 		}
 		return person;
 	}
-	
-	public Curriculum jsonToCurriculum(String jsonStr){
+
+	public Curriculum jsonToCurriculum(String jsonStr) {
 		Curriculum curriculum = new Curriculum();
 		try {
 			JSONObject jsonObj = new JSONObject(jsonStr);
-			curriculum.setEndTime(jsonObj.getString("endTime"));
+			curriculum.setEndTime(jsonObj.getString("endtime"));
 			curriculum.setCourseBelonging(jsonObj.getString("courseBelonging"));
-			curriculum.setStartTime(jsonObj.getString("startTime"));
+			curriculum.setStartTime(jsonObj.getString("starttime"));
 			curriculum.setCourseNature(jsonObj.getString("courseNature"));
-			curriculum.setExamMethod(jsonObj.getString("examMethod"));			
+			curriculum.setExamMethod(jsonObj.getString("examMethod"));
 			curriculum.setBeginSection(jsonObj.getInt("beginSection"));
 			curriculum.setCourseName(jsonObj.getString("courseName"));
 			curriculum.setCourseCategory(jsonObj.getString("courseCategory"));
@@ -52,25 +56,25 @@ public class JsonParse {
 			curriculum.setOddorReven(jsonObj.getString("oddorReven"));
 			curriculum.setBeginWeek(jsonObj.getInt("beginWeek"));
 			curriculum.setDay(jsonObj.getInt("day"));
-			curriculum.setCredit(jsonObj.getDouble("credit"));
+			curriculum.setCredit(jsonObj.getString("credit"));
 			curriculum.setPlace(jsonObj.getString("place"));
 			curriculum.setChooseNumber(jsonObj.getString("chooseNumber"));
 			curriculum.setCtid(jsonObj.getString("ctid"));
-			curriculum.setTeacher(jsonObj.getString("teacher"));
+			curriculum.setTeacher(jsonObj.getString("teachername"));
 		} catch (JSONException e) {
 			Log.e("jsonToCurriculum", e.toString());
 		}
 		return curriculum;
 	}
-	
-	public Curriculum jsonToCurriculum(JSONObject jsonObj){
+
+	public Curriculum jsonToCurriculum(JSONObject jsonObj) {
 		Curriculum curriculum = new Curriculum();
 		try {
 			curriculum.setEndTime(jsonObj.getString("endtime"));
 			curriculum.setCourseBelonging(jsonObj.getString("courseBelonging"));
 			curriculum.setStartTime(jsonObj.getString("starttime"));
 			curriculum.setCourseNature(jsonObj.getString("courseNature"));
-			curriculum.setExamMethod(jsonObj.getString("examMethod"));			
+			curriculum.setExamMethod(jsonObj.getString("examMethod"));
 			curriculum.setBeginSection(jsonObj.getInt("beginsection"));
 			curriculum.setCourseName(jsonObj.getString("coursename"));
 			curriculum.setCourseCategory(jsonObj.getString("courseCategory"));
@@ -79,29 +83,70 @@ public class JsonParse {
 			curriculum.setOddorReven(jsonObj.getString("oddoreven"));
 			curriculum.setBeginWeek(jsonObj.getInt("beginweek"));
 			curriculum.setDay(jsonObj.getInt("day"));
-			curriculum.setCredit(jsonObj.getDouble("credit"));
+			curriculum.setCredit(jsonObj.getString("credit"));
 			curriculum.setPlace(jsonObj.getString("place"));
 			curriculum.setChooseNumber(jsonObj.getString("choosenumber"));
 			curriculum.setCtid(jsonObj.getString("ctid"));
-			curriculum.setTeacher(jsonObj.getString("teacher"));
+			curriculum.setTeacher(jsonObj.getString("teachername"));
 		} catch (JSONException e) {
 			Log.e("jsonToCurriculum", e.toString());
 		}
 		return curriculum;
 	}
-	
-	public AchievementElement jsonToAchievementElement(JSONObject jsonObj){
-		AchievementElement achievementElement=new AchievementElement();
-		try{
-			achievementElement.setCourseName(jsonObj.getString("coursename"));
-			achievementElement.setCredit(Float.parseFloat(jsonObj.getString("credit")));
-			achievementElement.setScore(jsonObj.getInt("score"));
-			achievementElement.setType(jsonObj.getString("courseNature"));
-	} catch (JSONException e) {
-		Log.e("jsonToAchievementElement", e.toString());
-	}
-	return achievementElement;
-		
-	}
 
+	public AchievementElement jsonToAchievementElement(JSONObject jsonObj) {
+		AchievementElement achievementElement = new AchievementElement();
+		try {
+			achievementElement.setCourseName(jsonObj.getString("coursename"));
+			// achievementElement.setPoint(jsonObj.getDouble("point"));
+			achievementElement.setCredit(jsonObj.getDouble("credit"));
+			achievementElement.setType(jsonObj.getString("courseNature"));
+			if (jsonObj.getString("examMethod").equals("学位课")) {
+				achievementElement.setType("学位课");
+			}
+			String score = jsonObj.getString("score");
+			Pattern pattern = Pattern.compile("[0-9]*");
+			Matcher isNum = pattern.matcher(score);
+			if (isNum.matches()) {
+				achievementElement.setScore(Integer.parseInt(score));
+			} else {
+				achievementElement.setGrade(score);
+			}
+			/*
+			 * 五级制
+			 */
+			/*
+			if (achievementElement.getScore() >= 90) {
+				achievementElement.setPoint(4.5);
+			} else {
+				if (achievementElement.getScore() >= 80) {
+					achievementElement.setPoint(3.5);
+				} else {
+					if (achievementElement.getScore() >= 70) {
+						achievementElement.setPoint(2.5);
+					} else {
+						if (achievementElement.getScore() >= 60) {
+							achievementElement.setPoint(1.5);
+						} else {
+							achievementElement.setPoint(0.0);
+						}
+					}
+				}
+			
+			
+			}*/
+			/*
+			 * 常规制
+			 */
+			
+			if (achievementElement.getScore() >= 50) {
+				achievementElement.setPoint((achievementElement.getScore()-50)/10);				
+				}else achievementElement.setPoint(0.0);
+		} catch (JSONException e) {
+			Log.e("jsonToAchievementElement", e.toString());
+
+		}
+		return achievementElement;
+
+	}
 }

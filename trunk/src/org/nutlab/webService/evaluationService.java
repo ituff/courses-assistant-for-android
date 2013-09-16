@@ -24,7 +24,16 @@ import com.njut.data.CookieElement;
 public class evaluationService {
 	private String TAG = "EVALUTION_SERVICE";
 
-	public String upload(String ctid,String effect,String discipline,String attendance,String speed,String advice) {
+	public String upload(String ctid,String effect,String discipline,String attendance,String speed,String advice,String endtime) {
+		if(kczlApplication.IsOffLine==1){
+			loginService ls = new loginService();
+			String msg = ls.login(kczlApplication.UserName,
+					kczlApplication.PassWord);
+			if(!msg.contains("birthday")){
+				kczlApplication.IsLogined=0;
+				return "Error";
+			}			
+		}
 		HttpClient httpclient = new DefaultHttpClient();
 		// ÄãµÄURL
 		HttpPost httppost = new HttpPost("http://" + kczlApplication.ServerUri
@@ -39,6 +48,9 @@ public class evaluationService {
 			nameValuePairs.add(new BasicNameValuePair("attendance", attendance));
 			nameValuePairs.add(new BasicNameValuePair("speed", speed));
 			nameValuePairs.add(new BasicNameValuePair("advice", advice));
+			nameValuePairs.add(new BasicNameValuePair("discipline", discipline));
+			nameValuePairs.add(new BasicNameValuePair("schoolnumber", kczlApplication.Person.getSchoolnumber()));
+			nameValuePairs.add(new BasicNameValuePair("endtime", endtime));
 			((AbstractHttpClient) httpclient).setCookieStore(kczlApplication.Cookies);
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "utf8"));
 			HttpResponse response = httpclient.execute(httppost);
@@ -51,7 +63,7 @@ public class evaluationService {
 					Log.i(TAG, "-------Cookie NONE---------");
 				} else {
 					CookieElement cookie = new CookieElement();
-					for (int i = 0; i < cookies.size(); i++) {
+					/*for (int i = 0; i < cookies.size(); i++) {
 						// ±£´æcookie
 						if (cookies.get(i).getName().toUpperCase()
 								.equals("JSESSIONID")) {
@@ -69,7 +81,7 @@ public class evaluationService {
 								+ cookies.get(i).getValue());
 					}
 					kczlApplication.sCookie=cookie;
-					kczlApplication.Cookies=((AbstractHttpClient)httpclient).getCookieStore();//¶Ácookie
+					kczlApplication.Cookies=((AbstractHttpClient)httpclient).getCookieStore();//¶Ácookie */
 				}
 			} else {
 				strResult = "Error Response:"
