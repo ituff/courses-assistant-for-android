@@ -3,13 +3,17 @@ package com.njut.data;
 /*成绩相关的数据的抽象*/
 public class AchievementElement {
 	private String courseName;
-	private int score;
+	private double score;
 	private String type;
 	private double credit;
 	private String grade;
 	private double point;
+	//补考或重修
+	private String achievementType;
+	//补考或重修成绩
+	private double newestMark;
 
-	public AchievementElement(String courseName, int score, String type,
+	public AchievementElement(String courseName, double score, String type,
 			double credit,double point) {
 		this.courseName = courseName;
 		this.score = score;
@@ -26,7 +30,7 @@ public class AchievementElement {
 		return courseName;
 	}
 
-	public int getScore() {
+	public double getScore() {
 		return score;
 	}
 
@@ -42,7 +46,7 @@ public class AchievementElement {
 		this.courseName = courseName;
 	}
 
-	public void setScore(int score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 
@@ -79,5 +83,21 @@ public class AchievementElement {
 		} else {
 			score = 50;
 		}
+	}
+
+	public String getAchievementType() {
+		return achievementType;
+	}
+
+	public void setAchievementType(String achievementType) {
+		this.achievementType = achievementType;
+	}
+
+	public double getNewestMark() {
+		return newestMark;
+	}
+
+	public void setNewestMark(double newestMark) {
+		this.newestMark = newestMark;
 	}
 }

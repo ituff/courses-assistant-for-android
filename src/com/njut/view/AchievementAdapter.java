@@ -32,6 +32,7 @@ public class AchievementAdapter extends BaseAdapter {
 	private List<AchievementElement> list;
 	private LayoutInflater inflater;
 	private Context context;
+	
 
 	public AchievementAdapter(Context context, List<AchievementElement> list) {
 		this.inflater = LayoutInflater.from(context);
@@ -68,18 +69,25 @@ public class AchievementAdapter extends BaseAdapter {
 
 		TextView score = (TextView) convertView
 				.findViewById(R.id.score_Textview);
+		
+		TextView makeup=(TextView) convertView.findViewById(R.id.makeup_Textview);
 
 		courseName.setText(list.get(position).getCourseName());
 
 		credit.setText(list.get(position).getCredit() + "学分");
 
 		type.setText(list.get(position).getType());
+		
+		if(list.get(position).getNewestMark()>0.0){
+			makeup.setText("补考："+list.get(position).getNewestMark());
+		}
+		
 		if (list.get(position).getGrade()!=null) {
 			score.setText(list.get(position).getGrade());
 		} else
-			score.setText(Integer.toString(list.get(position).getScore()));
-		String colorStr = AppUtils.getRGBByScore(list.get(position).getScore());
-		String colorStr1 = AppUtils.getRGBByScore1(list.get(position)
+			score.setText(Double.toString(list.get(position).getScore()));
+		String colorStr = AppUtils.getRGBByScore((int)list.get(position).getScore());
+		String colorStr1 = AppUtils.getRGBByScore1((int)list.get(position)
 				.getScore());
 		GradientDrawable grad = new GradientDrawable(// 渐变色
 				Orientation.TOP_BOTTOM, new int[] { Color.parseColor(colorStr),

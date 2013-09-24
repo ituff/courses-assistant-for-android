@@ -36,6 +36,11 @@
 				android:id="@+id/type_Textview" android:layout_marginRight="22dip"
 				android:layout_width="wrap_content" android:textSize="12sp"
 				android:text="必修课" android:layout_height="wrap_content"></TextView>
+			<TextView android:layout_centerVertical="true"
+				android:textColor="@drawable/white" android:layout_toLeftOf="@id/type_Textview"
+				android:id="@+id/makeup_Textview" android:layout_marginRight="22dip"
+				android:layout_width="wrap_content" android:textSize="12sp"
+				android:text="" android:layout_height="wrap_content"></TextView>
 		</RelativeLayout>
 	</LinearLayout>
 	

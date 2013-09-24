@@ -105,10 +105,10 @@ public class JsonParse {
 				achievementElement.setType("Ñ§Î»¿Î");
 			}
 			String score = jsonObj.getString("score");
-			Pattern pattern = Pattern.compile("[0-9]*");
+			Pattern pattern = Pattern.compile("^[0-9]+\\.{0,1}[0-9]{0,2}$");
 			Matcher isNum = pattern.matcher(score);
 			if (isNum.matches()) {
-				achievementElement.setScore(Integer.parseInt(score));
+				achievementElement.setScore(Double.parseDouble(score));
 			} else {
 				achievementElement.setGrade(score);
 			}
@@ -140,9 +140,12 @@ public class JsonParse {
 			 */
 			
 			if (achievementElement.getScore() >= 50) {
-				achievementElement.setPoint((achievementElement.getScore()-50)/10);				
+				achievementElement.setPoint((achievementElement.getScore()-50)/10.0);				
 				}else achievementElement.setPoint(0.0);
+
+			achievementElement.setNewestMark(jsonObj.getDouble("makeupScore"));
 		} catch (JSONException e) {
+			achievementElement.setNewestMark(0.0);
 			Log.e("jsonToAchievementElement", e.toString());
 
 		}
